@@ -8,5 +8,5 @@ public interface IProductService {
      Product getProductById(int ProductId);
      boolean addProduct(Product product);
      void updateProduct(Product product);
-     void deleteProduct(int ProductId);
+     void deleteProduct(Integer id);
 } 

@@ -52,7 +52,7 @@ public class ProductControllerTest extends AbstractControllerTest {
 		Integer id = new Integer(1);
 		Product entity = getEntityStubData();
 
-		String uri = "/user/product/{id}";
+		String uri = "/products/{id}";
 
 		when(iProductService.getProductById(id)).thenReturn(entity);
 
@@ -73,7 +73,7 @@ public class ProductControllerTest extends AbstractControllerTest {
 	public void getAllProducts_ShouldReturnAllFounfProducts() throws Exception {
 		Collection<Product> list = getEntityListStubData();
 
-		String uri = "/user/products";
+		String uri = "/products";
 
 		when(iProductService.getAllProducts()).thenReturn((List<Product>) list);
 		MvcResult result = mvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON)).andReturn();
@@ -94,7 +94,7 @@ public class ProductControllerTest extends AbstractControllerTest {
 		Integer id = new Integer(1);
 		//Product entity = getEntityStubData();
 
-		String uri = "/user/product/{id}";
+		String uri = "/products/{id}";
 
 		when(iProductService.getProductById(id)).thenReturn(null);
 
@@ -119,7 +119,7 @@ public class ProductControllerTest extends AbstractControllerTest {
 		// studentService.addCourse to respond back with mockCourse
 		Mockito.when(iProductService.addProduct(Mockito.any(Product.class))).thenReturn(true);
 
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/user/product").accept(MediaType.APPLICATION_JSON)
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/products").accept(MediaType.APPLICATION_JSON)
 				.content(exampleCourseJson).contentType(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mvc.perform(requestBuilder).andReturn();
@@ -144,7 +144,7 @@ public class ProductControllerTest extends AbstractControllerTest {
 
 		doNothing().when(iProductService).updateProduct(Mockito.any(Product.class));
 
-		String uri = "/user/product";
+		String uri = "/products";
 		String inputJson = super.mapToJson(entity);
 
 		MvcResult result = mvc.perform(MockMvcRequestBuilders.put(uri, id).contentType(MediaType.APPLICATION_JSON)
@@ -178,7 +178,7 @@ public class ProductControllerTest extends AbstractControllerTest {
 
 		Integer id = new Integer(1);
 
-		String uri = "/user/product/{id}";
+		String uri = "/products/{id}";
 
 		MvcResult result = mvc.perform(MockMvcRequestBuilders.delete(uri, id)).andReturn();
 

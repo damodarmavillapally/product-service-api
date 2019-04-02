@@ -18,14 +18,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.epam.java.training.dao.IProductDAO;
 import com.epam.java.training.entity.Product;
-import com.epam.java.training.service.ProductService;
+import com.epam.java.training.repository.ProductRepository;
+import com.epam.java.training.vo.Review;
 
 public class ProductServiceTest {
 
 	@Mock
-	private IProductDAO iProductDAO;
+	private ProductRepository<Review> productRepository;
 
 	@InjectMocks
 	private ProductService productService;
@@ -39,7 +39,7 @@ public class ProductServiceTest {
 	public void getProductById_ShouldReturnProductForProductId() {
 		Integer id = new Integer(1);
 		Product entity = getEntityStubData();
-		when(iProductDAO.getProductById(1)).thenReturn(entity);
+		when(productRepository.findById(1)).thenReturn(entity);
 
 		Product product = productService.getProductById(id);
 		assertEquals("Failure - Product Ids should be same", product.getId(), entity.getId());
@@ -50,7 +50,7 @@ public class ProductServiceTest {
 	public void getAllProducts_ShouldGetAllProducts() {
 		Collection<Product> list = getEntityListStubData();
 
-		when(iProductDAO.getAllProducts()).thenReturn((List<Product>) list);
+		when(productRepository.findAll()).thenReturn((List<Product>) list);
 		List<Product> products = productService.getAllProducts();
 		assertEquals("Failure - Product size should not be less zero", list.size(), products.size());
 	}
@@ -58,7 +58,7 @@ public class ProductServiceTest {
 	@Test
 	public void addProduct_ShouldAddNewProduct() {
 		Product entity = getEntityStubData();
-		doNothing().when(iProductDAO).addProduct(Mockito.any(Product.class));
+		when(productRepository.save(entity)).thenReturn(entity);
 		boolean isCreated = productService.addProduct(entity);
 		assertTrue(isCreated);
 	}
@@ -68,9 +68,9 @@ public class ProductServiceTest {
 
 		Product entity = getEntityStubData();
 
-		doNothing().when(iProductDAO).deleteProduct(entity.getId());
+		doNothing().when(productRepository).delete(entity);
 		productService.deleteProduct(entity.getId());
-		verify(iProductDAO, times(1)).deleteProduct(entity.getId());
+		verify(productRepository, times(1)).delete(Mockito.any(Product.class));
 
 	}
 
@@ -80,9 +80,9 @@ public class ProductServiceTest {
 		Product entity = getEntityStubData();
 		entity.setProduct(entity.getProduct() + " test");
 		Long id = new Long(1);
-		doNothing().when(iProductDAO).updateProduct(Mockito.any(Product.class));
+		when(productRepository.save(Mockito.any(Product.class))).thenReturn(entity);
 		productService.updateProduct(entity);
-		verify(iProductDAO, times(1)).updateProduct(entity);
+		verify(productRepository, times(1)).save(entity);
 
 	}
 

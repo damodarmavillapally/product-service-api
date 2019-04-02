@@ -1,6 +1,7 @@
 package com.epam.java.training.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.epam.java.training.vo.Review;
 @Entity
 @Table(name="product")
 public class Product implements Serializable { 
@@ -25,6 +28,9 @@ public class Product implements Serializable {
 	
 	@Column(name="price")	
 	private double price;
+	
+	
+	transient List<Review> reviews;
 	
 	public int getId() {
 		return id;
@@ -56,5 +62,13 @@ public class Product implements Serializable {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
 	}
 }  

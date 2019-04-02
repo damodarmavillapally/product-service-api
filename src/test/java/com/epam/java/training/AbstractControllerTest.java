@@ -8,7 +8,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.epam.java.training.controller.BaseController;
+import com.epam.java.training.controller.ProductController;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -26,7 +26,7 @@ public abstract class AbstractControllerTest extends AbstractTest {
 		mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
-	protected void setUp(BaseController controller) {
+	protected void setUp(ProductController controller) {
 		mvc = MockMvcBuilders.standaloneSetup(controller).build();
 	}
 
