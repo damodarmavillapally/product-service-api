@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -144,7 +145,10 @@ public class ProductController {
 	})
 	public ResponseEntity<Void> addProductReview(@RequestBody Review review, @PathVariable("id") Integer id,
 			UriComponentsBuilder builder) {
-		return productService.addProductReview(review, id, builder);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		productService.addProductReview(review, id);
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/products/{id}/reviews/{reviewId}")
@@ -163,8 +167,11 @@ public class ProductController {
 			@ApiResponse(code=500, message="Internal Server Error")
 	})
 	public ResponseEntity<Void> updateProductReview(@RequestBody Review review, @PathVariable("id") int productId,
-			@PathVariable("reviewId") int reviewId, UriComponentsBuilder builder) {
-		return productService.updateProductReview(review, productId, reviewId, builder);
+			@PathVariable("reviewId") int reviewId) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		productService.updateProductReview(review, productId, reviewId);
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/products/{id}/reviews/{reviewId}")
@@ -182,7 +189,10 @@ public class ProductController {
 			@ApiResponse(code=500, message="Internal Server Error")
 	})
 	public ResponseEntity<Void> deleteProductReview(@PathVariable("id") int productId,
-			@PathVariable("reviewId") int reviewId, UriComponentsBuilder builder) {
-		return productService.deleteProductReview(productId, reviewId, builder);
+			@PathVariable("reviewId") int reviewId) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		productService.deleteProductReview(productId, reviewId);
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 }

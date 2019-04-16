@@ -20,8 +20,8 @@ public class Product implements Serializable {
 	@Column(name="id")
     private int id;
 	
-	@Column(name="product")
-    private String product;
+	@Column(name="name")
+    private String name;
 	
 	@Column(name="quantity")	
 	private int quantity;
@@ -40,12 +40,12 @@ public class Product implements Serializable {
 		this.id = id;
 	}
 
-	public String getProduct() {
-		return product;
+	public String getName() {
+		return name;
 	}
 
-	public void setProduct(String product) {
-		this.product = product;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getQuantity() {

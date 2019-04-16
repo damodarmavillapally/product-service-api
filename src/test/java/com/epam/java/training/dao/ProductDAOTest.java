@@ -67,7 +67,7 @@ public class ProductDAOTest {
 	@Test
 	public void updateProduct_ShouldUpdxateProduct() {
 		Product entity = getEntityStubData();
-		entity.setProduct(entity.getProduct() + " test");
+		entity.setName(entity.getName() + " test");
 		Long id = new Long(1);
 		productRepository.save(entity);
 		verify(productRepository, times(1)).save(entity);
@@ -83,7 +83,7 @@ public class ProductDAOTest {
 	private Product getEntityStubData() {
 		Product entity = new Product();
 		entity.setId(1);
-		entity.setProduct("SONY ANDROID");
+		entity.setName("SONY ANDROID");
 		entity.setQuantity(10);
 		entity.setPrice(50000);
 		return entity;

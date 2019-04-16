@@ -136,7 +136,7 @@ public class ProductControllerTest extends AbstractControllerTest {
 	public void updateProduct_ShouldUpdateProduct() throws Exception {
 
 		Product entity = getEntityStubData();
-		entity.setProduct(entity.getProduct() + " test");
+		entity.setName(entity.getName() + " test");
 		Long id = new Long(1);
 
 		// String exampleCourseJson = "{\"productId\":1,\"title\":\"Java Java
@@ -201,7 +201,7 @@ public class ProductControllerTest extends AbstractControllerTest {
 	private Product getEntityStubData() {
 		Product entity = new Product();
 		entity.setId(1);
-		entity.setProduct("SONY ANDROID");
+		entity.setName("SONY ANDROID");
 		entity.setQuantity(10);
 		entity.setPrice(50000);
 		return entity;

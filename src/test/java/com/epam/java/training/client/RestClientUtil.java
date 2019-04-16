@@ -26,7 +26,7 @@ public class RestClientUtil {
 		ResponseEntity<Product> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
 				Product.class, 2);
 		Product product = responseEntity.getBody();
-		logger.info("Id........:" + product.getId() + ", Product:" + product.getProduct() + ", Quantity:"
+		logger.info("Id........:" + product.getId() + ", Product:" + product.getName() + ", Quantity:"
 				+ product.getQuantity() + "Price: " + product.getPrice() + "Reviews: " + product.getReviews().size());
 	}
 
@@ -40,7 +40,7 @@ public class RestClientUtil {
 				Product[].class);
 		Product[] products = responseEntity.getBody();
 		for (Product product : products) {
-			logger.info("Id:" + product.getId() + ", Product:" + product.getProduct() + ", Quantity:"
+			logger.info("Id:" + product.getId() + ", Product:" + product.getName() + ", Quantity:"
 					+ product.getQuantity() + "Price: " + product.getPrice() + "product Reviews:"
 					+ product.getReviews().size());
 		}
@@ -52,7 +52,7 @@ public class RestClientUtil {
 		RestTemplate restTemplate = new RestTemplate();
 		String url = "http://localhost:8090/products";
 		Product prod = new Product();
-		prod.setProduct("SONY Smart TV");
+		prod.setName("SONY Smart TV");
 		prod.setQuantity(10);
 		prod.setPrice(150000);
 		HttpEntity<Product> requestEntity = new HttpEntity<Product>(prod, headers);
@@ -67,7 +67,7 @@ public class RestClientUtil {
 		String url = "http://localhost:8090/products";
 		Product prod = new Product();
 		prod.setId(1);
-		prod.setProduct("Update:SONY Smart TV");
+		prod.setName("Update:SONY Smart TV");
 		prod.setQuantity(20);
 		prod.setPrice(100000);
 		HttpEntity<Product> requestEntity = new HttpEntity<Product>(prod, headers);
