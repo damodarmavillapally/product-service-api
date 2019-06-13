@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.epam.java.training.client.ProductReviewClient;
 import com.epam.java.training.entity.Product;
 import com.epam.java.training.vo.Review;
 
@@ -29,30 +30,12 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 
 	private final String REVIEW_SERVICE_NAME = "http://review-service-api";
 	
+	@Autowired
+	ProductReviewClient productReviewClient;
+	
 	public List<Review> getProductReviews(int productId) {
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		// RestTemplate restTemplate = new RestTemplate();
-		headers.set("API_KEY", "12345");
-		String url = REVIEW_SERVICE_NAME + "/{productId}/reviews";
-		HttpEntity<String> requestEntity = new HttpEntity<String>(headers);
-		ResponseEntity<Review[]> responseEntity = null;
-		try {
-			responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Review[].class, productId);
-		} catch (RestClientException e) {
-			logger.error(e.getMessage());
-		}
 		List<Review> productReviews = new ArrayList<Review>();
-		if (responseEntity != null) {
-			Review[] reviews = responseEntity.getBody();
-			logger.info("Review response received...." + reviews);
-
-			for (Review review : reviews) {
-				logger.info("Review Description:" + review.getDescription() + ", Rating:" + review.getRating());
-				productReviews.add(review);
-			}
-		}
+		productReviews = productReviewClient.getProductReviews(productId);
 		return productReviews;
 	}
 	
