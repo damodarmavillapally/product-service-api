@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 import com.epam.java.training.entity.Product;
 import com.epam.java.training.repository.ProductRepository;
@@ -20,8 +19,8 @@ public class ProductService implements IProductService {
 	@Autowired
 	private ProductRepository<Product> productRepository;
 
-	@Autowired
-	RestTemplate restTemplate;
+	//@Autowired
+	//RestTemplate restTemplate;
 	
 	@Autowired
 	ProductReviewService productReviewService;
@@ -51,22 +50,28 @@ public class ProductService implements IProductService {
 		}
 	}
 	@Transactional
-	public void updateProduct(Product product) {
+	public boolean updateProduct(Product product) {
+		boolean isUpdated = false;
 		if(product != null){
-			Product productToDelete = getProductById(product.getId());
-			if(productToDelete != null){
+			Product productToUpdate = getProductById(product.getId());
+			if(productToUpdate != null){
 				productRepository.save(product);
+				isUpdated = true;
 			}
 		}
+		return isUpdated;
 	}
 	@Transactional
-	public void deleteProduct(Integer id) {
+	public boolean deleteProduct(Integer id) {
+		boolean isDeleted = false;
 		Product productToDelete = getProductById(id);
 		if(productToDelete != null){
 			Product product = new Product();
 			product.setId(id);
 			productRepository.delete(product);
+			isDeleted = true;
 		}
+		return isDeleted;
 	}
 	@Transactional
 	public void addProductReview(Review review,Integer id) {

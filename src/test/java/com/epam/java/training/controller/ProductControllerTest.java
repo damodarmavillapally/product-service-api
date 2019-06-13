@@ -142,7 +142,8 @@ public class ProductControllerTest extends AbstractControllerTest {
 		// String exampleCourseJson = "{\"productId\":1,\"title\":\"Java Java
 		// Concurrency\",\"category\":\"Java\"}";
 
-		doNothing().when(iProductService).updateProduct(Mockito.any(Product.class));
+		//doNothing().when(iProductService).updateProduct(Mockito.any(Product.class));
+		Mockito.when(iProductService.updateProduct(Mockito.any(Product.class))).thenReturn(true);
 
 		String uri = "/products";
 		String inputJson = super.mapToJson(entity);
@@ -174,7 +175,8 @@ public class ProductControllerTest extends AbstractControllerTest {
 
 		Product entity = getEntityStubData();
 
-		doNothing().when(iProductService).deleteProduct(entity.getId());
+//		doNothing().when(iProductService).deleteProduct(entity.getId());
+		Mockito.when(iProductService.deleteProduct(entity.getId())).thenReturn(true);
 
 		Integer id = new Integer(1);
 
@@ -187,7 +189,7 @@ public class ProductControllerTest extends AbstractControllerTest {
 		System.out.println("content::" + content);
 		verify(iProductService, times(1)).deleteProduct(entity.getId());
 
-		Assert.assertEquals("failure - expected HTTP status 204", 204, status);
+		Assert.assertEquals("failure - expected HTTP status 200", 200, status);
 		Assert.assertTrue("failure - expected HTTP response body to be empty", content.trim().length() == 0);
 
 	}

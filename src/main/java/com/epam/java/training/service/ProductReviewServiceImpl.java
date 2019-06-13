@@ -21,14 +21,14 @@ import com.epam.java.training.entity.Product;
 import com.epam.java.training.vo.Review;
 
 @Service
+@Transactional
 public class ProductReviewServiceImpl implements ProductReviewService{
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
-	RestTemplate restTemplate;
+	private RestTemplate restTemplate;
 
-	private String REVIEW_SERVICE_NAME = "http://review-service-api";
+	private final String REVIEW_SERVICE_NAME = "http://review-service-api";
 	
-	@Transactional
 	public List<Review> getProductReviews(int productId) {
 
 		HttpHeaders headers = new HttpHeaders();
@@ -55,7 +55,7 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 		}
 		return productReviews;
 	}
-	@Transactional
+	
 	public List<Product> getAllProductsReviews(List<Product> allProducta){
 		List<Product> allProductReviews = new ArrayList<Product>();
 		Product product = null;
@@ -72,7 +72,7 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 		}
 		return allProductReviews;
 	}
-	@Transactional
+	
 	public void addProductReview(int productId, Review review){
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -82,7 +82,7 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 		HttpEntity<Review> requestEntity = new HttpEntity<Review>(review, headers);
 		restTemplate.postForLocation(url, requestEntity, productId);
 	}
-	@Transactional
+	
 	public void updateProductReview(Review review, int productId,
 			int reviewId){
 		HttpHeaders headers = new HttpHeaders();
@@ -93,7 +93,7 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 		HttpEntity<Review> requestEntity = new HttpEntity<Review>(review, headers);
 		restTemplate.put(url, requestEntity, productId, reviewId);
 	}
-	@Transactional
+	
 	public void deleteProductReview(int productId, int reviewId){
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
