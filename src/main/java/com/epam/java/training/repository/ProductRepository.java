@@ -8,5 +8,5 @@ public interface ProductRepository<P> extends CrudRepository<Product, Long> {
 
 	Product findById(int productId);
 
-	boolean findByName(String product);
+	Product findByName(String product);
 }

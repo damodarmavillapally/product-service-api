@@ -67,6 +67,7 @@ public class ProductServiceTest {
 	@Test
 	public void addProduct_ShouldAddNewProduct() {
 		Product entity = getEntityStubData();
+		when(productRepository.findByName(entity.getName())).thenReturn(null);
 		when(productRepository.save(entity)).thenReturn(entity);
 		boolean isCreated = productService.addProduct(entity);
 		assertTrue(isCreated);

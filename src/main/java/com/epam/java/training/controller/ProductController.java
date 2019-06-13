@@ -72,7 +72,8 @@ public class ProductController {
 		return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
 	}
 
-	@PostMapping("")
+	//@PostMapping("")
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ApiOperation(value="Add the Product Information", notes="Adds the Product Information.", response=ResponseEntity.class)
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "product", value = "product", required=true, dataType="Product", paramType="path")

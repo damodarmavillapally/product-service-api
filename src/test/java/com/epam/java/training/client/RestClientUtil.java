@@ -52,7 +52,7 @@ public class RestClientUtil {
 		RestTemplate restTemplate = new RestTemplate();
 		String url = "http://localhost:8090/products";
 		Product prod = new Product();
-		prod.setName("SONY Smart TV");
+		prod.setName("SONY Smart TV Demo2");
 		prod.setQuantity(10);
 		prod.setPrice(150000);
 		HttpEntity<Product> requestEntity = new HttpEntity<Product>(prod, headers);
@@ -67,7 +67,7 @@ public class RestClientUtil {
 		String url = "http://localhost:8090/products";
 		Product prod = new Product();
 		prod.setId(1);
-		prod.setName("Update:SONY Smart TV");
+		prod.setName("Updated:SONY Smart TV");
 		prod.setQuantity(20);
 		prod.setPrice(100000);
 		HttpEntity<Product> requestEntity = new HttpEntity<Product>(prod, headers);
@@ -115,16 +115,16 @@ public class RestClientUtil {
 		RestTemplate restTemplate = new RestTemplate();
 		String url = "http://localhost:8090/products/{id}/reviews/{reviewId}";
 		HttpEntity<Review> requestEntity = new HttpEntity<Review>(headers);
-		restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class, 2, 7);
+		restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class, 1, 1);
 	}
 
 	public static void main(String args[]) {
 		RestClientUtil util = new RestClientUtil();
-		// util.getProductByIdDemo();
-		util.getAllProductsDemo();
-		// util.addProductDemo();
-		// util.updateProductDemo();
-		// util.deletProductDemo();
-		// util.deleteProductReview();
+		 //util.getProductByIdDemo();
+		//util.getAllProductsDemo();
+		 util.addProductDemo();
+		 //util.updateProductDemo();
+		 //util.deleteProductDemo();
+		 //util.deleteProductReview();
 	}
 }

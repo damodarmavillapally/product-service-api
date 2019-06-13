@@ -42,12 +42,15 @@ public class ProductService implements IProductService {
 	}
 	@Transactional
 	public boolean addProduct(Product product) {
-		if (productRepository.findByName(product.getName())) {
-			return false;
-		} else {
+		boolean isAdded = false;
+		Product pro = productRepository.findByName(product.getName());
+		if (pro == null) {
 			productRepository.save(product);
-			return true;
+			isAdded = true;
+		} else {
+			isAdded =  false;
 		}
+		return isAdded;
 	}
 	@Transactional
 	public boolean updateProduct(Product product) {
