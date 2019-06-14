@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -27,7 +28,10 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private final String REVIEW_SERVICE_NAME = "http://review-service-api";
+	@Autowired
+	private DiscoveryClient discoveryClient;
+	
+	private final static String REVIEW_SERVICE_NAME = "REVIEW-SERVICE-API";
 	
 	public List<Review> getProductReviews(int productId) {
 
@@ -35,7 +39,8 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		// RestTemplate restTemplate = new RestTemplate();
 		headers.set("API_KEY", "12345");
-		String url = REVIEW_SERVICE_NAME + "/{productId}/reviews";
+		String reviewServiceUrl = serviceInstancesByApplicationName(REVIEW_SERVICE_NAME);
+		String url = reviewServiceUrl + "/{productId}/reviews";
 		HttpEntity<String> requestEntity = new HttpEntity<String>(headers);
 		ResponseEntity<Review[]> responseEntity = null;
 		try {
@@ -78,7 +83,8 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set("API_KEY", "12345");
 		//RestTemplate restTemplate = new RestTemplate();
-		String url = REVIEW_SERVICE_NAME + "/{productId}/reviews";
+		String reviewServiceUrl = serviceInstancesByApplicationName(REVIEW_SERVICE_NAME);
+		String url = reviewServiceUrl + "/{productId}/reviews";
 		HttpEntity<Review> requestEntity = new HttpEntity<Review>(review, headers);
 		restTemplate.postForLocation(url, requestEntity, productId);
 	}
@@ -89,7 +95,8 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set("API_KEY", "12345");
 		RestTemplate restTemplate = new RestTemplate();
-		String url = REVIEW_SERVICE_NAME + "/{productId}/reviews/{reviewId}";
+		String reviewServiceUrl = serviceInstancesByApplicationName(REVIEW_SERVICE_NAME);
+		String url = reviewServiceUrl + "/{productId}/reviews/{reviewId}";
 		HttpEntity<Review> requestEntity = new HttpEntity<Review>(review, headers);
 		restTemplate.put(url, requestEntity, productId, reviewId);
 	}
@@ -99,9 +106,21 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set("API_KEY", "12345");
 		//RestTemplate restTemplate = new RestTemplate();
-		String url = REVIEW_SERVICE_NAME + "/{productId}/reviews/{reviewId}";
+		String reviewServiceUrl = serviceInstancesByApplicationName(REVIEW_SERVICE_NAME);
+		String url = reviewServiceUrl + "/{productId}/reviews/{reviewId}";
 		HttpEntity<Review> requestEntity = new HttpEntity<Review>(headers);
 		restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class, productId, reviewId);
 	}
+	
+	/**
+	 * Reading end point from eureka server to consume product review service
+	 * 
+	 * @param applicationName
+	 * @return
+	 */
+	private String serviceInstancesByApplicationName(String applicationName) {
+		return this.discoveryClient.getInstances(applicationName).get(0).getUri().toString();
+	}
+
 
 }

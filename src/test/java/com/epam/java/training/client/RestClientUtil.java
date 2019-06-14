@@ -105,7 +105,7 @@ public class RestClientUtil {
 		review.setDescription("Updated product review");
 		review.setRating(4);
 		HttpEntity<Review> requestEntity = new HttpEntity<Review>(review, headers);
-		restTemplate.put(url, requestEntity, 2, 6);
+		restTemplate.put(url, requestEntity, 2, 3);
 		logger.info("Completed updating product review...");
 	}
 
@@ -115,16 +115,17 @@ public class RestClientUtil {
 		RestTemplate restTemplate = new RestTemplate();
 		String url = "http://localhost:8090/products/{id}/reviews/{reviewId}";
 		HttpEntity<Review> requestEntity = new HttpEntity<Review>(headers);
-		restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class, 1, 1);
+		restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class, 1, 2);
 	}
 
 	public static void main(String args[]) {
 		RestClientUtil util = new RestClientUtil();
 		 //util.getProductByIdDemo();
 		//util.getAllProductsDemo();
-		 util.addProductDemo();
+		 //util.addProductDemo();
 		 //util.updateProductDemo();
 		 //util.deleteProductDemo();
 		 //util.deleteProductReview();
+		util.updateProductReview();
 	}
 }
