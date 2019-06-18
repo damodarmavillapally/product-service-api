@@ -1,6 +1,5 @@
 package com.epam.java.training.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
 import feign.RequestInterceptor;
@@ -8,14 +7,14 @@ import feign.RequestTemplate;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 
+
+
 public class ProductReviewClientConfig {
 	 
 	  @Bean
-	  public RequestInterceptor interceptor(
-	          @Value("${review-service.auth.header}") String authHeader,
-	          @Value("${review-service.auth.value}") String authHeaderValue) {
+	  public RequestInterceptor interceptor() {
 		  
-	    return (RequestTemplate template) -> template.header(authHeader, authHeaderValue);
+	    return (RequestTemplate template) -> template.header("API_KEY", "12345");
 	  }
 	 
 	  @Bean

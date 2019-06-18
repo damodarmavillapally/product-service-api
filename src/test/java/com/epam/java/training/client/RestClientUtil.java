@@ -89,11 +89,11 @@ public class RestClientUtil {
 		RestTemplate restTemplate = new RestTemplate();
 		String url = "http://localhost:8090/products/{id}/reviews";
 		Review review = new Review();
-		review.setDescription("Added roduct from Product Service");
+		review.setDescription("Added roduct from Product Service from feign client");
 		review.setRating(2);
 		HttpEntity<Review> requestEntity = new HttpEntity<Review>(review, headers);
 		URI uri = restTemplate.postForLocation(url, requestEntity, 2);
-		logger.info("Completed adding product review..." + uri.getPath());
+		logger.info("Completed adding product review...");
 	}
 
 	public void updateProductReview() {
@@ -102,10 +102,10 @@ public class RestClientUtil {
 		RestTemplate restTemplate = new RestTemplate();
 		String url = "http://localhost:8090/products/{id}/reviews/{reviewId}";
 		Review review = new Review();
-		review.setDescription("Updated product review");
+		review.setDescription("Updated product reviewed");
 		review.setRating(4);
 		HttpEntity<Review> requestEntity = new HttpEntity<Review>(review, headers);
-		restTemplate.put(url, requestEntity, 2, 6);
+		restTemplate.put(url, requestEntity, 2, 5);
 		logger.info("Completed updating product review...");
 	}
 
@@ -115,16 +115,19 @@ public class RestClientUtil {
 		RestTemplate restTemplate = new RestTemplate();
 		String url = "http://localhost:8090/products/{id}/reviews/{reviewId}";
 		HttpEntity<Review> requestEntity = new HttpEntity<Review>(headers);
-		restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class, 1, 1);
+		restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class, 2, 5);
 	}
 
 	public static void main(String args[]) {
 		RestClientUtil util = new RestClientUtil();
-		 util.getProductByIdDemo();
+		 //util.getProductByIdDemo();
 		//util.getAllProductsDemo();
 		 //util.addProductDemo();
 		 //util.updateProductDemo();
 		 //util.deleteProductDemo();
 		 //util.deleteProductReview();
+		//util.addProductReview();
+		//util.updateProductReview();
+		util.deleteProductReview();
 	}
 }

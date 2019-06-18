@@ -7,14 +7,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.epam.java.training.client.ProductReviewClient;
@@ -57,34 +51,16 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 	}
 	
 	public void addProductReview(int productId, Review review){
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.set("API_KEY", "12345");
-		//RestTemplate restTemplate = new RestTemplate();
-		String url = REVIEW_SERVICE_NAME + "/{productId}/reviews";
-		HttpEntity<Review> requestEntity = new HttpEntity<Review>(review, headers);
-		restTemplate.postForLocation(url, requestEntity, productId);
+		productReviewClient.createReviewProduct(productId, review);
 	}
 	
 	public void updateProductReview(Review review, int productId,
 			int reviewId){
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.set("API_KEY", "12345");
-		RestTemplate restTemplate = new RestTemplate();
-		String url = REVIEW_SERVICE_NAME + "/{productId}/reviews/{reviewId}";
-		HttpEntity<Review> requestEntity = new HttpEntity<Review>(review, headers);
-		restTemplate.put(url, requestEntity, productId, reviewId);
+		productReviewClient.updateProductReview(productId, reviewId, review);
 	}
 	
 	public void deleteProductReview(int productId, int reviewId){
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.set("API_KEY", "12345");
-		//RestTemplate restTemplate = new RestTemplate();
-		String url = REVIEW_SERVICE_NAME + "/{productId}/reviews/{reviewId}";
-		HttpEntity<Review> requestEntity = new HttpEntity<Review>(headers);
-		restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class, productId, reviewId);
+		productReviewClient.deleteProductReview(productId, reviewId);
 	}
 
 }
