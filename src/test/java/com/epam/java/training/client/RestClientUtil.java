@@ -24,7 +24,7 @@ public class RestClientUtil {
 		String url = "http://localhost:8090/products/{id}";
 		HttpEntity<String> requestEntity = new HttpEntity<String>(headers);
 		ResponseEntity<Product> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
-				Product.class, 1);
+				Product.class, 2);
 		Product product = responseEntity.getBody();
 		logger.info("Id........:" + product.getId() + ", Product:" + product.getName() + ", Quantity:"
 				+ product.getQuantity() + "Price: " + product.getPrice() + "Reviews: " + product.getReviews().size());
@@ -120,7 +120,7 @@ public class RestClientUtil {
 
 	public static void main(String args[]) {
 		RestClientUtil util = new RestClientUtil();
-		 //util.getProductByIdDemo();
+		 util.getProductByIdDemo();
 		//util.getAllProductsDemo();
 		 //util.addProductDemo();
 		 //util.updateProductDemo();
@@ -128,6 +128,6 @@ public class RestClientUtil {
 		 //util.deleteProductReview();
 		//util.addProductReview();
 		//util.updateProductReview();
-		util.deleteProductReview();
+		//util.deleteProductReview();
 	}
 }
