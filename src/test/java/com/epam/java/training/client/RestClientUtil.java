@@ -21,7 +21,9 @@ public class RestClientUtil {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://localhost:8090/products/{id}";
+		//String url = "http://localhost:8090/products/{id}";
+		// Requests route through api=gateway
+		String url = "http://localhost:8765/api/client/products/{id}";
 		HttpEntity<String> requestEntity = new HttpEntity<String>(headers);
 		ResponseEntity<Product> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
 				Product.class, 2);
@@ -34,7 +36,8 @@ public class RestClientUtil {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://localhost:8090/products";
+		//String url = "http://localhost:8090/products";
+		String url = "http://localhost:8765/api/client/products";
 		HttpEntity<String> requestEntity = new HttpEntity<String>(headers);
 		ResponseEntity<Product[]> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
 				Product[].class);
@@ -50,7 +53,8 @@ public class RestClientUtil {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://localhost:8090/products";
+		//String url = "http://localhost:8090/products";
+		String url = "http://localhost:8765/api/client/products";
 		Product prod = new Product();
 		prod.setName("SONY Smart TV Demo2");
 		prod.setQuantity(10);
@@ -64,7 +68,8 @@ public class RestClientUtil {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://localhost:8090/products";
+		//String url = "http://localhost:8090/products";
+		String url = "http://localhost:8765/api/client/products";
 		Product prod = new Product();
 		prod.setId(1);
 		prod.setName("Updated:SONY Smart TV");
@@ -78,7 +83,8 @@ public class RestClientUtil {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://localhost:8090/products/{id}";
+		//String url = "http://localhost:8090/products/{id}";
+		String url = "http://localhost:8765/api/client/products/{id}";
 		HttpEntity<Product> requestEntity = new HttpEntity<Product>(headers);
 		restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class, 4);
 	}
@@ -87,7 +93,8 @@ public class RestClientUtil {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://localhost:8090/products/{id}/reviews";
+		//String url = "http://localhost:8090/products/{id}/reviews";
+		String url = "http://localhost:8765/api/client/products/{id}/reviews";
 		Review review = new Review();
 		review.setDescription("Added roduct from Product Service from feign client");
 		review.setRating(2);
@@ -100,7 +107,8 @@ public class RestClientUtil {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://localhost:8090/products/{id}/reviews/{reviewId}";
+		//String url = "http://localhost:8090/products/{id}/reviews/{reviewId}";
+		String url = "http://localhost:8765/api/client/products/{id}/reviews/{reviewId}";
 		Review review = new Review();
 		review.setDescription("Updated product reviewed");
 		review.setRating(4);
@@ -113,9 +121,10 @@ public class RestClientUtil {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://localhost:8090/products/{id}/reviews/{reviewId}";
+		//String url = "http://localhost:8090/products/{id}/reviews/{reviewId}";
+		String url = "http://localhost:8765/api/client/products/{id}/reviews/{reviewId}";
 		HttpEntity<Review> requestEntity = new HttpEntity<Review>(headers);
-		restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class, 2, 5);
+		restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class, 2, 7);
 	}
 
 	public static void main(String args[]) {
